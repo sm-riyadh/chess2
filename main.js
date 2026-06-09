@@ -1,22 +1,37 @@
 // --- Game Database ---
 const UNIT_DB = {
-    'ringo':  { id: 'ringo', name: 'Ringo', cost: 1, powerSystem: 'Weapon', maxHp: 500, ad: 65, special: 20, def: 20, sDef: 10, as: 1.2, agility: 0.2, range: 3.5, walk: 2.0, maxMana: 60, traits: ['Weapon', 'Sniper'], color: '#ef4444' },
-    'glaive': { id: 'glaive', name: 'Glaive', cost: 2, powerSystem: 'Weapon', maxHp: 800, ad: 55, special: 40, def: 40, sDef: 20, as: 0.8, agility: 0.4, range: 1, walk: 1.8, maxMana: 80, traits: ['Weapon', 'Bruiser'], color: '#fb923c' },
-    'celeste':{ id: 'celeste', name: 'Celeste', cost: 3, powerSystem: 'Crystal', maxHp: 450, ad: 30, special: 150, def: 15, sDef: 30, as: 0.7, agility: 0.3, range: 4, walk: 1.6, maxMana: 100, traits: ['Crystal', 'Mage'], color: '#a855f7' },
+    'ringo':  { id: 'ringo', name: 'Ringo', cost: 1, powerSystem: 'Weapon', maxHp: 500, ad: 65, special: 20, def: 20, sDef: 10, as: 1.2, agility: 0.2, range: 3.5, walk: 2.0, maxMana: 60, traits: ['Weapon', 'Striker'], color: '#ef4444' },
+    'koshka': { id: 'koshka', name: 'Koshka', cost: 1, powerSystem: 'Crystal', maxHp: 550, ad: 40, special: 90, def: 25, sDef: 25, as: 1.4, agility: 0.5, range: 1, walk: 2.4, maxMana: 50, traits: ['Crystal', 'Striker'], color: '#ec4899' },
+    'catherine':{ id: 'catherine', name: 'Catherine', cost: 1, powerSystem: 'Technology', maxHp: 750, ad: 30, special: 60, def: 45, sDef: 45, as: 0.8, agility: 0.3, range: 1, walk: 1.8, maxMana: 80, traits: ['Technology', 'Brawler'], color: '#94a3b8' },
+    'glaive': { id: 'glaive', name: 'Glaive', cost: 2, powerSystem: 'Weapon', maxHp: 800, ad: 55, special: 40, def: 40, sDef: 20, as: 0.8, agility: 0.4, range: 1, walk: 1.8, maxMana: 80, traits: ['Weapon', 'Brawler'], color: '#fb923c' },
     'skaarf': { id: 'skaarf', name: 'Skaarf', cost: 2, powerSystem: 'Crystal', maxHp: 550, ad: 35, special: 120, def: 20, sDef: 30, as: 0.75, agility: 0.3, range: 3.5, walk: 1.5, maxMana: 80, traits: ['Crystal', 'Mage'], color: '#3b82f6' },
+    'celeste':{ id: 'celeste', name: 'Celeste', cost: 3, powerSystem: 'Crystal', maxHp: 450, ad: 30, special: 150, def: 15, sDef: 30, as: 0.7, agility: 0.3, range: 4, walk: 1.6, maxMana: 100, traits: ['Crystal', 'Mage'], color: '#a855f7' },
     'joule':  { id: 'joule', name: 'Joule', cost: 3, powerSystem: 'Technology', maxHp: 900, ad: 50, special: 200, def: 60, sDef: 40, as: 0.6, agility: 0.5, range: 1, walk: 1.5, maxMana: 120, traits: ['Technology', 'Mech'], color: '#10b981' },
-    'alpha':  { id: 'alpha', name: 'Alpha', cost: 4, powerSystem: 'Technology', maxHp: 850, ad: 70, special: 100, def: 40, sDef: 30, as: 0.9, agility: 0.3, range: 1, walk: 2.2, maxMana: 90, traits: ['Technology', 'Cyborg'], color: '#facc15' }
+    'alpha':  { id: 'alpha', name: 'Alpha', cost: 4, powerSystem: 'Technology', maxHp: 850, ad: 70, special: 100, def: 40, sDef: 30, as: 0.9, agility: 0.3, range: 1, walk: 2.2, maxMana: 90, traits: ['Technology', 'Mech'], color: '#facc15' },
+    'krul':   { id: 'krul', name: 'Krul', cost: 5, powerSystem: 'Weapon', maxHp: 1200, ad: 80, special: 200, def: 60, sDef: 60, as: 0.9, agility: 0.4, range: 1, walk: 1.6, maxMana: 100, traits: ['Weapon', 'Brawler'], color: '#7c3aed' }
+};
+
+const TIER_POOL_SIZES = { 1: 29, 2: 22, 3: 18, 4: 12, 5: 10 };
+
+const SHOP_ODDS = {
+    1: [100, 0, 0, 0, 0],
+    2: [100, 0, 0, 0, 0],
+    3: [75, 25, 0, 0, 0],
+    4: [55, 30, 15, 0, 0],
+    5: [45, 33, 20, 2, 0],
+    6: [25, 40, 30, 5, 0],
+    7: [19, 30, 35, 15, 1],
+    8: [16, 20, 35, 25, 4]
 };
 
 const SYNERGY_THRESHOLDS = {
-    'Weapon': [2, 4],
-    'Crystal': [2, 4],
-    'Technology': [2],
-    'Sniper': [2, 4],
-    'Bruiser': [2, 4],
-    'Mage': [2, 4],
-    'Mech': [2],
-    'Cyborg': [2]
+    'Weapon': [2, 3],
+    'Crystal': [2, 3],
+    'Technology': [2, 3],
+    'Striker': [2],
+    'Brawler': [2, 3],
+    'Mage': [2],
+    'Mech': [2]
 };
 
 const LEVEL_XP = [0, 2, 6, 10, 20, 36, 56, 80, 100];
@@ -33,6 +48,7 @@ let state = {
     streakCount: 0,
     streakType: 'none',
     shop: [],
+    globalPool: {},
     bench: [null, null, null, null, null],
     overflowBench: [null, null, null, null, null],
     board: Array(8).fill(null).map(() => Array(5).fill(null)),
@@ -60,7 +76,11 @@ const DOM = {
     tooltip: document.getElementById('tooltip'),
     synergyHud: document.getElementById('synergy-hud'),
     sellZone: document.getElementById('sell-zone'),
-    sellValue: document.getElementById('sell-value')
+    sellValue: document.getElementById('sell-value'),
+    btnToggleStore: document.getElementById('btn-toggle-store'),
+    uiContainer: document.getElementById('bottom-ui-container'),
+    capacityVal: document.getElementById('capacity-val'),
+    capacityBox: document.querySelector('.stat-box.capacity')
 };
 
 // --- Initialization ---
@@ -70,18 +90,25 @@ function init() {
     createBoard();
     createBench();
     
-    // Grant 3 random starting heroes
     const unitKeys = Object.keys(UNIT_DB);
+    unitKeys.forEach(key => {
+        state.globalPool[key] = TIER_POOL_SIZES[UNIT_DB[key].cost];
+    });
+    
+    // Grant 3 random starting heroes
     for(let i=0; i<3; i++) {
-        const randomKey = unitKeys[Math.floor(Math.random() * unitKeys.length)];
+        const tier1Keys = unitKeys.filter(k => UNIT_DB[k].cost === 1);
+        const randomKey = tier1Keys[Math.floor(Math.random() * tier1Keys.length)];
         const unit = UNIT_DB[randomKey];
+        state.globalPool[randomKey]--;
+        
         state.bench[i] = {
+            ...unit,
             id: Math.random().toString(36).substr(2, 9),
             baseId: unit.id,
             stars: 1,
             hp: unit.maxHp,
-            mana: 0,
-            ...unit
+            mana: 0
         };
     }
     renderUnits();
@@ -97,6 +124,14 @@ function init() {
     DOM.btnFastForward.addEventListener('click', () => {
         timeScale = timeScale === 1 ? 5 : 1;
         DOM.btnFastForward.style.background = timeScale === 5 ? '#eab308' : '';
+    });
+    
+    DOM.btnToggleStore.addEventListener('click', () => {
+        DOM.uiContainer.classList.toggle('open');
+        const isOpen = DOM.uiContainer.classList.contains('open');
+        const shopIcon = '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>';
+        const closeIcon = '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+        DOM.btnToggleStore.innerHTML = isOpen ? `${closeIcon} Close Store` : `${shopIcon} Open Store`;
     });
     
     // Sell Zone Events
@@ -123,6 +158,15 @@ function createBoard() {
             DOM.board.appendChild(cell);
         }
     }
+    
+    document.addEventListener('click', (e) => {
+        if (state.phase === 'combat' && DOM.uiContainer.classList.contains('open')) {
+            if (!DOM.uiContainer.contains(e.target) && e.target !== DOM.btnToggleStore) {
+                DOM.uiContainer.classList.remove('open');
+                DOM.btnToggleStore.innerText = '🛒 Open Store';
+            }
+        }
+    });
 }
 
 function createBench() {
@@ -194,11 +238,36 @@ function refreshShop(free = false) {
         state.gold -= 2;
     }
     
+    // Return unbought to pool
+    state.shop.forEach(u => {
+        if (u) state.globalPool[u.id]++;
+    });
+    
     state.shop = [];
+    const odds = SHOP_ODDS[Math.min(8, Math.max(1, state.level))];
     const unitKeys = Object.keys(UNIT_DB);
+    
     for (let i = 0; i < 5; i++) {
-        const randomKey = unitKeys[Math.floor(Math.random() * unitKeys.length)];
-        state.shop.push(UNIT_DB[randomKey]);
+        const roll = Math.random() * 100;
+        let cumulative = 0;
+        let targetCost = 1;
+        for (let c = 0; c < 5; c++) {
+            cumulative += odds[c];
+            if (roll <= cumulative) {
+                targetCost = c + 1;
+                break;
+            }
+        }
+        
+        const validKeys = unitKeys.filter(k => UNIT_DB[k].cost === targetCost && state.globalPool[k] > 0);
+        
+        if (validKeys.length > 0) {
+            const randomKey = validKeys[Math.floor(Math.random() * validKeys.length)];
+            state.globalPool[randomKey]--; // Temporarily deduct
+            state.shop.push(UNIT_DB[randomKey]);
+        } else {
+            state.shop.push(null);
+        }
     }
     renderShop();
     updateUI();
@@ -217,7 +286,7 @@ function renderShop() {
                 <div class="card-info">
                     <div class="card-name">${unit.name}</div>
                     <div class="card-traits">${unit.traits.join(', ')}</div>
-                    <div class="card-cost">🪙 ${unit.cost}</div>
+                    <div class="card-cost"><img src="assets/gold_coin.png" class="coin-icon" alt="Gold"> ${unit.cost}</div>
                 </div>
             `;
             card.addEventListener('click', () => buyUnit(index));
@@ -243,13 +312,13 @@ function buyUnit(shopIndex) {
     state.shop[shopIndex] = null;
     
     const unitInstance = {
+        ...unit,
         id: Math.random().toString(36).substr(2, 9),
         baseId: unit.id,
         stars: 1,
         hp: unit.maxHp,
         mana: 0,
-        flaggedForSell: false,
-        ...unit
+        flaggedForSell: false
     };
     
     if (isOverflow) state.overflowBench[benchIndex] = unitInstance;
@@ -324,8 +393,10 @@ function handleSellDrop(e) {
                
     if (!unit) return;
     
-    let refund = unit.cost * Math.pow(3, unit.stars - 1);
+    let copies = Math.pow(3, unit.stars - 1);
+    let refund = unit.cost * copies;
     state.gold += refund;
+    state.globalPool[unit.baseId] += copies;
     
     if (dragSource.type === 'bench') state.bench[dragSource.i] = null;
     if (dragSource.type === 'overflow') state.overflowBench[dragSource.i] = null;
@@ -382,6 +453,7 @@ function handleDrop(e, targetType, targetR, targetC) {
     
     renderUnits();
     updateSynergies();
+    updateUI();
 }
 
 function returnToSource(unit, source) {
@@ -389,6 +461,7 @@ function returnToSource(unit, source) {
     if (source.type === 'overflow') state.overflowBench[source.i] = unit;
     if (source.type === 'board') state.board[source.r][source.c] = unit;
     renderUnits();
+    updateUI();
 }
 
 function getPlayerBoardCount() {
@@ -415,8 +488,8 @@ function checkMerge(baseId) {
         
         for(let i=0; i<5; i++) scan('bench', state.bench[i], i, 0);
         for(let i=0; i<5; i++) scan('overflow', state.overflowBench[i], i, 0);
-        for(let r=4; r<8; r++) {
-            for(let c=0; c<5; c++) scan('board', state.board[r][c], r, c);
+        for(let r=3; r<6; r++) {
+            for(let c=0; c<6; c++) scan('board', state.board[r][c], r, c);
         }
         
         if (matches.length >= 3) {
@@ -564,7 +637,7 @@ function updateUnitDOM(el, unit) {
         <div class="unit-stars" style="z-index:2;">${starsStr}</div>
         <div class="unit-hp-bar" style="z-index:2;"><div class="unit-hp-fill ${hpClass}" style="width: ${hpPct}%"></div></div>
         ${unit.maxMana > 0 ? `<div class="unit-mana-bar" style="z-index:2;"><div class="unit-mana-fill ${manaClass}" style="width: ${manaPct}%"></div></div>` : ''}
-        ${unit.flaggedForSell ? `<div style="position:absolute; top:-6px; right:-6px; font-size:10px; background:#ef4444; border:1px solid #fff; border-radius:50%; width:16px; height:16px; display:flex; justify-content:center; align-items:center; z-index:10; box-shadow:0 0 5px #000;">💰</div>` : ''}
+        ${unit.flaggedForSell ? `<div style="position:absolute; top:-6px; right:-6px; background:#ef4444; border:1px solid #fff; border-radius:50%; width:16px; height:16px; display:flex; justify-content:center; align-items:center; z-index:10; box-shadow:0 0 5px #000;"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:10px; height:10px;"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></div>` : ''}
     `;
 }
 
@@ -575,6 +648,15 @@ function updateUI() {
     DOM.playerHp.innerText = state.playerHp;
     DOM.enemyHp.innerText = state.enemyHp;
     
+    const boardCount = getPlayerBoardCount();
+    const maxCapacity = state.level + 2;
+    DOM.capacityVal.innerText = `${boardCount}/${maxCapacity}`;
+    if (boardCount < maxCapacity && state.phase === 'planning') {
+        DOM.capacityBox.classList.add('glow');
+    } else {
+        DOM.capacityBox.classList.remove('glow');
+    }
+    
     const xpReq = LEVEL_XP[state.level] || 999;
     DOM.xpText.innerText = `${state.xp}/${xpReq}`;
     DOM.xpFill.style.width = state.level >= 8 ? '100%' : `${(state.xp / xpReq) * 100}%`;
@@ -584,7 +666,7 @@ function updateUI() {
         DOM.btnBuyXp.disabled = true;
     } else {
         const cost = xpReq - state.xp;
-        DOM.btnBuyXp.innerText = `Level Up (${cost}🪙)`;
+        DOM.btnBuyXp.innerHTML = `Level Up <span class="cost-badge">${cost} <img src="assets/gold_coin.png" class="coin-icon" alt="Gold"></span>`;
         DOM.btnBuyXp.disabled = state.gold < cost;
     }
 }
@@ -604,7 +686,9 @@ function startCombat() {
         const unit = state.overflowBench[i];
         if (unit) {
             if (unit.flaggedForSell) {
-                autoSellGold += unit.cost * Math.pow(3, unit.stars - 1);
+                let copies = Math.pow(3, unit.stars - 1);
+                autoSellGold += unit.cost * copies;
+                state.globalPool[unit.baseId] += copies;
                 state.overflowBench[i] = null;
             } else {
                 unit.flaggedForSell = true;
@@ -616,10 +700,14 @@ function startCombat() {
     renderUnits(); // update visuals to remove overflow units
     
     state.phase = 'combat';
+    document.body.className = 'phase-combat';
     DOM.btnStart.innerText = 'Combat in Progress...';
     DOM.btnStart.classList.add('combat-active');
     
-    DOM.btnFastForward.style.display = 'block';
+    DOM.uiContainer.classList.remove('open');
+    DOM.btnToggleStore.style.display = 'flex';
+    DOM.btnToggleStore.innerHTML = '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Open Store';
+    DOM.btnFastForward.style.display = 'flex';
     timeScale = 1;
     DOM.btnFastForward.style.background = '';
     
@@ -629,7 +717,6 @@ function startCombat() {
     document.querySelectorAll('.board-area .unit').forEach(el => el.remove());
     
     state.entities = [];
-    combatGrid = Array(8).fill(null).map(() => Array(5).fill(null));
     
     for(let r=0; r<8; r++) {
         for(let c=0; c<5; c++) {
@@ -639,14 +726,11 @@ function startCombat() {
                     ...unit,
                     x: c,
                     y: r,
-                    targetX: c,
-                    targetY: r,
                     target: null,
                     attackTimer: 1 / unit.as,
                     agilityTimer: 0,
                     domElement: createUnitElement(unit, null)
                 };
-                combatGrid[r][c] = ent;
                 ent.domElement.classList.add('combat-active');
                 DOM.board.appendChild(ent.domElement);
                 state.entities.push(ent);
@@ -663,23 +747,26 @@ function spawnEnemies() {
         for(let c=0; c<5; c++) state.board[r][c] = null;
     }
     
-    const unitKeys = Object.keys(UNIT_DB);
-    let enemyCount = Math.min(6, state.round + 1);
-    
+    const enemyCount = Math.min(state.level + 2, 8);
     for(let i=0; i<enemyCount; i++) {
-        const key = unitKeys[Math.floor(Math.random() * unitKeys.length)];
-        const r = Math.floor(Math.random() * 4);
-        const c = Math.floor(Math.random() * 5);
-        if (!state.board[r][c]) {
-            state.board[r][c] = {
+        const unitKeys = Object.keys(UNIT_DB);
+        const randomKey = unitKeys[Math.floor(Math.random() * unitKeys.length)];
+        const unit = UNIT_DB[randomKey];
+        
+        let x = Math.floor(Math.random() * 5);
+        let y = Math.floor(Math.random() * 4);
+        if (!state.board[y][x]) {
+            state.board[y][x] = {
+                ...unit,
                 id: 'enemy_' + Math.random().toString(36).substr(2, 9),
-                baseId: key,
+                baseId: randomKey,
                 stars: 1,
-                hp: UNIT_DB[key].maxHp,
+                hp: unit.maxHp,
                 mana: 0,
-                isEnemy: true,
-                ...UNIT_DB[key]
+                isEnemy: true
             };
+        } else {
+            i--; // try again
         }
     }
 }
@@ -703,45 +790,61 @@ function combatLoop(time) {
 function updateEntities(dt) {
     const activeEntities = state.entities.filter(e => e.hp > 0);
     
+    // Target acquisition & Attack State check
     activeEntities.forEach(ent => {
+        ent.isAttacking = false;
         if (!ent.target || ent.target.hp <= 0) {
             ent.target = findNearestEnemy(ent, activeEntities);
             ent.agilityTimer = ent.agility;
         }
-        
         if (ent.target) {
             const dist = Math.hypot(ent.target.x - ent.x, ent.target.y - ent.y);
+            if (dist <= ent.range + 0.1) {
+                ent.isAttacking = true;
+            }
+        }
+    });
+    
+    // Separation force (soft collision)
+    activeEntities.forEach(ent => {
+        if (ent.isAttacking) return; // Do not move if actively attacking
+        
+        let pushX = 0, pushY = 0;
+        activeEntities.forEach(other => {
+            if (ent === other) return;
+            const dx = ent.x - other.x;
+            const dy = ent.y - other.y;
+            const dist = Math.hypot(dx, dy);
             
-            if (dist > ent.range + 0.1) {
-                if (ent.targetX === Math.round(ent.x) && ent.targetY === Math.round(ent.y)) {
-                    const nextCell = getNextCell(ent, ent.target);
-                    if (nextCell) {
-                        if (combatGrid[ent.targetY] && combatGrid[ent.targetY][ent.targetX] === ent) {
-                            combatGrid[ent.targetY][ent.targetX] = null;
-                        }
-                        ent.targetX = nextCell.x;
-                        ent.targetY = nextCell.y;
-                        combatGrid[ent.targetY][ent.targetX] = ent;
-                    }
-                }
+            // Units overlap if they are within 0.7 tiles of each other
+            if (dist > 0 && dist < 0.7) {
+                const force = (0.7 - dist) * 2; // push strength
+                pushX += (dx / dist) * force * dt;
+                pushY += (dy / dist) * force * dt;
+            }
+        });
+        
+        ent.x += pushX;
+        ent.y += pushY;
+        
+        // Clamp to board bounds (0 to 4 for x, 0 to 7 for y)
+        ent.x = Math.max(0, Math.min(4, ent.x));
+        ent.y = Math.max(0, Math.min(7, ent.y));
+    });
+
+    activeEntities.forEach(ent => {
+        if (ent.target) {
+            if (!ent.isAttacking) {
+                // Continuous floating-point movement
+                const dist = Math.hypot(ent.target.x - ent.x, ent.target.y - ent.y);
+                const dx = ent.target.x - ent.x;
+                const dy = ent.target.y - ent.y;
+                const walkStep = ent.walk * dt;
                 
-                if (ent.targetX !== ent.x || ent.targetY !== ent.y) {
-                    const dx = ent.targetX - ent.x;
-                    const dy = ent.targetY - ent.y;
-                    const stepDist = Math.hypot(dx, dy);
-                    const walkStep = ent.walk * dt;
-                    
-                    if (walkStep >= stepDist) {
-                        ent.x = ent.targetX;
-                        ent.y = ent.targetY;
-                    } else {
-                        ent.x += (dx / stepDist) * walkStep;
-                        ent.y += (dy / stepDist) * walkStep;
-                    }
-                }
+                ent.x += (dx / dist) * walkStep;
+                ent.y += (dy / dist) * walkStep;
                 
                 if (ent.attackTimer > 0) ent.attackTimer -= dt;
-                
             } else {
                 if (ent.agilityTimer > 0) {
                     ent.agilityTimer -= dt;
@@ -755,46 +858,14 @@ function updateEntities(dt) {
             }
         }
         
-        ent.domElement.style.left = `calc(20% * ${ent.x})`;
-        ent.domElement.style.top = `calc(12.5% * ${ent.y})`;
+        ent.domElement.style.left = `calc(100% / 5 * ${ent.x})`;
+        ent.domElement.style.top = `calc(100% / 8 * ${ent.y})`;
         updateUnitDOM(ent.domElement, ent);
     });
     
     state.entities.filter(e => e.hp <= 0).forEach(e => {
         if (e.domElement.parentNode) e.domElement.remove();
-        if (Math.round(e.targetY) >= 0 && Math.round(e.targetY) < 8 && Math.round(e.targetX) >= 0 && Math.round(e.targetX) < 5) {
-             if (combatGrid[Math.round(e.targetY)] && combatGrid[Math.round(e.targetY)][Math.round(e.targetX)] === e) {
-                 combatGrid[Math.round(e.targetY)][Math.round(e.targetX)] = null;
-             }
-        }
     });
-}
-
-function getNextCell(ent, target) {
-    let bestCell = null;
-    let minDist = Infinity;
-    
-    const currX = Math.round(ent.x);
-    const currY = Math.round(ent.y);
-    
-    for(let dy=-1; dy<=1; dy++) {
-        for(let dx=-1; dx<=1; dx++) {
-            if (dx === 0 && dy === 0) continue;
-            const nx = currX + dx;
-            const ny = currY + dy;
-            
-            if (nx >= 0 && nx < 5 && ny >= 0 && ny < 8) {
-                if (!combatGrid[ny][nx] || combatGrid[ny][nx].hp <= 0) {
-                    const dist = Math.hypot(target.x - nx, target.y - ny);
-                    if (dist < minDist) {
-                        minDist = dist;
-                        bestCell = {x: nx, y: ny};
-                    }
-                }
-            }
-        }
-    }
-    return bestCell;
 }
 
 function findNearestEnemy(ent, activeEntities) {
@@ -821,8 +892,8 @@ function showDamage(target, damage, isTrueDmg) {
         el.style.textShadow = '0 0 5px gold';
     }
     
-    el.style.left = `calc(20% * ${target.x} + 10%)`;
-    el.style.top = `calc(12.5% * ${target.y} + 6%)`;
+    el.style.left = `calc(100% / 5 * ${target.x} + 10%)`;
+    el.style.top = `calc(100% / 8 * ${target.y} + 6%)`;
     
     DOM.board.appendChild(el);
     setTimeout(() => el.remove(), 800);
@@ -874,9 +945,11 @@ function castUlt(attacker, target) {
 function endCombat(playerWon) {
     cancelAnimationFrame(combatFrameId);
     state.phase = 'planning';
+    document.body.className = 'phase-planning';
     DOM.btnStart.innerText = 'Start Combat Phase';
     DOM.btnStart.classList.remove('combat-active');
     
+    DOM.btnToggleStore.style.display = 'none';
     DOM.btnFastForward.style.display = 'none';
     timeScale = 1;
     
@@ -917,12 +990,12 @@ function endCombat(playerWon) {
     
     state.round++;
     
-    for(let r=0; r<4; r++) {
-        for(let c=0; c<5; c++) state.board[r][c] = null;
+    for(let r=0; r<3; r++) {
+        for(let c=0; c<6; c++) state.board[r][c] = null;
     }
     
-    for(let r=4; r<8; r++) {
-        for(let c=0; c<5; c++) {
+    for(let r=3; r<6; r++) {
+        for(let c=0; c<6; c++) {
             if (state.board[r][c]) {
                 state.board[r][c].hp = state.board[r][c].maxHp;
                 state.board[r][c].mana = 0;

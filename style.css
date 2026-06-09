@@ -30,15 +30,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100svh;
     overflow: hidden; /* Prevent pull-to-refresh on mobile */
 }
 
 #app {
     width: 100%;
     max-width: 480px;
-    height: 100vh;
-    height: 100dvh;
+    height: 100svh;
     background: var(--bg-main);
     display: flex;
     flex-direction: column;
@@ -52,10 +51,11 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 12px 20px;
-    background: var(--bg-panel);
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-glow);
     z-index: 10;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
 .stat-box {
@@ -74,6 +74,7 @@ body {
 .stat-box .value {
     font-size: 18px;
     font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
 .enemy-hp .value { color: var(--accent-health); }
@@ -94,26 +95,54 @@ body {
     font-weight: 600;
 }
 
+/* Capacity Glow */
+.capacity.glow .value {
+    color: var(--accent-gold);
+    text-shadow: 0 0 10px var(--accent-gold);
+    animation: pulse-glow 1.5s infinite;
+}
+
+@keyframes pulse-glow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
 /* --- Battle Board --- */
 .board-area {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 10px;
     position: relative;
     overflow: hidden;
+    /* Extra padding to prevent cutting off units near edge */
+    padding: 10px 0;
 }
 
-.grid-5x8 {
+#board {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    gap: 4px;
     width: 100%;
-    max-width: 380px;
-    aspect-ratio: 5 / 8;
+    max-width: 600px;
+    max-height: 100%;
+    margin: auto; /* Center within board-area */
+    gap: 2px;
+    padding: 2px;
+    box-sizing: border-box;
     position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.phase-combat #board {
+    grid-template-rows: repeat(8, 1fr);
+}
+
+.phase-planning #board {
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.phase-planning .enemy-territory {
+    display: none !important;
 }
 
 .cell {
@@ -124,6 +153,7 @@ body {
     justify-content: center;
     align-items: center;
     position: relative;
+    aspect-ratio: 1 / 1;
 }
 
 /* Give a subtle tint to player vs enemy halves */
@@ -420,34 +450,44 @@ body {
     flex: 1;
     padding: 10px;
     border: none;
+    border-bottom: 3px solid rgba(0,0,0,0.5);
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    background: rgba(255,255,255,0.1);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
     color: white;
-    transition: background 0.2s;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
 }
 
 .action-btn:active {
     background: rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+    transform: translateY(2px);
 }
 
 .phase-btn {
     padding: 12px;
     border: none;
+    border-bottom: 4px solid var(--primary-hover);
     border-radius: 8px;
-    background: var(--primary);
+    background: linear-gradient(to bottom, var(--primary), var(--primary-hover));
     color: white;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-    transition: background 0.2s;
+    transition: all 0.1s;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
 .phase-btn:active {
     background: var(--primary-hover);
+    border-bottom: 2px solid var(--primary-hover);
     transform: translateY(2px);
     box-shadow: 0 2px 5px rgba(99, 102, 241, 0.4);
 }
@@ -591,4 +631,71 @@ body {
 .overflow-bench {
     position: relative;
     margin-top: 15px;
+}
+
+.bottom-ui-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+}
+
+.phase-combat .bottom-ui-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(5px);
+    border-top: 1px solid var(--accent-gold);
+    transform: translateY(100%);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+}
+
+.phase-combat .bottom-ui-container.open {
+    transform: translateY(0);
+}
+
+.toggle-store-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 90;
+    background: linear-gradient(to bottom, var(--accent-gold), #d97706);
+    color: var(--bg-main);
+    border: none;
+    border-bottom: 4px solid #b45309;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.1s;
+}
+
+.toggle-store-btn:active {
+    transform: translateY(2px);
+    border-bottom: 2px solid #b45309;
+}
+
+/* Icons */
+.ui-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+.coin-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 2px;
 }
